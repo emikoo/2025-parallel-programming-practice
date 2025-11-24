@@ -1,6 +1,6 @@
 # Problem 0: Factorize a Number
 
-This task is worth 5 points.
+This task is worth 25 points.
 
 In this problem, you need to implement a program that will accept a single integer number and will output a list of prime factors of the given number. If a prime factor divides the given number multiple times, it should be repeated in the output as many times as it divides the given number.
 

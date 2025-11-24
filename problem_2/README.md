@@ -1,6 +1,6 @@
 # Problem 2: Sort an Array
 
-This task is worth 5 points.
+This task is worth 40 points.
 
 In this problem, you need to implement a program that will sort an array and will output some of the elements of the sorted array. The array to sort is given on the first line in an implicit form: you're given the number of elements in the arrray and then numbers A, B, and P. The array is defined in the following way:
 

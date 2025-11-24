@@ -1,6 +1,6 @@
 # Problem 1: Multiply Two Matrices
 
-This task is worth 5 points.
+This task is worth 35 points.
 
 In this problem, you need to implement a program that will accept two matrices and will compute a product of those two matrices. Input matrices are given to the program in an indirect form: on the first line, the number of rows and columns are given. On the second line, numbers A, B, X, Y, Z, and P are given. The matrix is then defined in the following way:
 
