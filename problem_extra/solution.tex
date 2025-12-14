@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\title{Parallel List Ranking with O(N) Work}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Definition}
+Given a linked list of $N$ nodes stored in an array where each node points to its successor, compute the rank (distance from the head) for each node.
+
+\section{Algorithm: Randomized List Ranking}
+We use a randomized contraction algorithm (Miller-Reif) which achieves $O(N)$ expected work and $O(\log N)$ expected span.
+
+\subsection{Algorithm Steps}
+\begin{enumerate}
+    \item \textbf{Initialization}:
+    \begin{itemize}
+        \item Compute the predecessor array $prev$ such that $prev[next[i]] = i$.
+        \item Initialize $rank[i] = 0$ for the head, and edge weights $w[i] = 1$ for all edges.
+    \end{itemize}
+    
+    \item \textbf{Contraction (Recursion)}:
+    \begin{itemize}
+        \item If the list size is small, solve sequentially.
+        \item Otherwise, for each node $i$, flip a random coin $c_i \in \{0, 1\}$.
+        \item Select node $i$ for removal if $c_i = 1$ and $c_{next[i]} = 0$ (identifying an independent set of nodes).
+        \item For each selected node $i$ to be removed:
+        \begin{itemize}
+            \item Update the weight of the predecessor's edge: $w[prev[i]] \leftarrow w[prev[i]] + w[i]$.
+            \item Bypass node $i$: $next[prev[i]] \leftarrow next[i]$, and $prev[next[i]] \leftarrow prev[i]$.
+            \item Store $i$ and its original connections for the expansion phase.
+        \end{itemize}
+        \item Compact the array of active nodes to size $N'$.
+        \item Recursively solve for the contracted list.
+    \end{itemize}
+    
+    \item \textbf{Expansion}:
+    \begin{itemize}
+        \item Upon return from recursion, the ranks of the remaining nodes (subset $S$) are correctly computed relative to the contracted list.
+        \item For each removed node $i$ (in parallel):
+        \begin{itemize}
+            \item Retrieve its active predecessor $p = prev[i]$.
+            \item The rank of $i$ is calculated as: $rank[i] = rank[p] + w_{original}[p]$.
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\section{Complexity Analysis}
+\begin{itemize}
+    \item \textbf{Work}: In each step, we remove a constant fraction of nodes (probability of removal is $1/4$). The work recurrence is $W(N) = W(3N/4) + O(N)$, which solves to $O(N)$.
+    \item \textbf{Span}: The number of recursion levels is logarithmic $O(\log N)$. Each step takes $O(1)$ time in parallel. Thus, the total span is $O(\log N)$.
+\end{itemize}
+
+\end{document}
